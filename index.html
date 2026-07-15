@@ -13,7 +13,7 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Arial, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
@@ -34,14 +34,8 @@
         }
 
         @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .greeting {
@@ -50,15 +44,12 @@
             margin-bottom: 10px;
             animation: bounce 1s ease-in-out infinite;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            letter-spacing: 2px;
         }
 
         @keyframes bounce {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-20px);
-            }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
         }
 
         .subtitle {
@@ -68,12 +59,8 @@
         }
 
         @keyframes fadeInDelay {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .tagline {
@@ -94,7 +81,7 @@
         .feature-card {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
-            padding: 20px;
+            padding: 25px 20px;
             border-radius: 15px;
             border: 2px solid rgba(255, 255, 255, 0.2);
             color: white;
@@ -105,14 +92,8 @@
         }
 
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .feature-card:nth-child(1) { animation-delay: 0.1s; }
@@ -126,14 +107,15 @@
         }
 
         .feature-icon {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #ffd700;
-            font-weight: bold;
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 14px;
+        }
+
+        .feature-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: #ffd700;
         }
 
         .feature-card h3 {
@@ -141,7 +123,12 @@
             margin-bottom: 10px;
         }
 
-        /* Map Section */
+        .feature-card p {
+            opacity: 0.9;
+            line-height: 1.4;
+        }
+
+        /* Section */
         .section {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 15px;
@@ -154,6 +141,16 @@
             color: #667eea;
             margin-bottom: 20px;
             font-size: 2em;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section h2 svg {
+            width: 34px;
+            height: 34px;
+            stroke: #667eea;
+            flex-shrink: 0;
         }
 
         #map {
@@ -187,30 +184,89 @@
             opacity: 0.9;
         }
 
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.2em;
+            font-weight: bold;
+            color: #764ba2;
+        }
+
+        .stat-label {
+            color: #667eea;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
         /* Hand and Finger Section */
+        .hand-instructions {
+            text-align: center;
+            color: #667eea;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
         .hand-container {
             display: flex;
             justify-content: center;
-            margin: 40px 0;
+            margin: 30px 0 10px;
+            position: relative;
         }
 
         .hand-svg {
-            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.35));
             max-width: 100%;
             height: auto;
+            touch-action: manipulation;
         }
 
-        .finger-part {
+        .finger-group {
             cursor: pointer;
-            transition: filter 0.05s;
+            transition: filter 0.06s, transform 0.06s;
+            transform-origin: center bottom;
         }
 
-        .finger-part:hover {
-            filter: brightness(1.2);
+        .finger-group:hover {
+            filter: brightness(1.08);
         }
 
-        .finger-part:active {
-            filter: brightness(0.8);
+        .finger-group.pulling {
+            animation: fingerPull 0.35s ease-out;
+        }
+
+        @keyframes fingerPull {
+            0% { transform: translateY(0); }
+            35% { transform: translateY(14px) scaleY(0.92); }
+            60% { transform: translateY(-6px) scaleY(1.04); }
+            100% { transform: translateY(0); }
+        }
+
+        .finger-label-row {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .finger-chip {
+            background: #f0f0ff;
+            color: #667eea;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
         }
 
         /* Sound effect indicator */
@@ -224,61 +280,36 @@
             padding: 15px 25px;
             border-radius: 25px;
             font-weight: bold;
-            animation: slideInRight 0.3s ease-out;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            font-size: 1.1em;
+            font-size: 1.2em;
+            z-index: 100;
         }
 
         .sound-indicator.show {
             display: block;
-        }
-
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(100px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .fart-text {
-            animation: popIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            animation: popIn 0.35s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
 
         @keyframes popIn {
-            0% {
-                transform: scale(0.5);
-                opacity: 0;
-            }
-            70% {
-                transform: scale(1.1);
-            }
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
+            0% { transform: scale(0.4) translateX(60px); opacity: 0; }
+            70% { transform: scale(1.08) translateX(0); }
+            100% { transform: scale(1) translateX(0); opacity: 1; }
+        }
+
+        footer {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.85);
+            padding: 20px 0;
+            font-size: 0.95em;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            .greeting {
-                font-size: 2.5em;
-            }
-
-            .subtitle {
-                font-size: 1.2em;
-            }
-
-            #map {
-                height: 300px;
-            }
-
-            .hand-svg {
-                max-width: 90%;
-            }
+            .greeting { font-size: 2.5em; }
+            .subtitle { font-size: 1.2em; }
+            #map { height: 320px; }
+            .hand-svg { max-width: 95%; }
+            .section h2 { font-size: 1.5em; }
         }
     </style>
 </head>
@@ -287,32 +318,59 @@
         <!-- Hero Section -->
         <div class="hero">
             <h1 class="greeting">HI DAD!</h1>
-            <p class="subtitle">Welcome to VibeCoding Powers!</p>
-            <p class="tagline">This website is powered by pure vibecoding energy</p>
+            <p class="subtitle">Welcome to VibeCoding Powers</p>
+            <p class="tagline">This entire website was built live, start to finish, by AI — just for you</p>
         </div>
 
         <!-- Cool Features -->
         <div class="features">
             <div class="feature-card">
-                <div class="feature-icon">[MAP]</div>
-                <h3>Geo-Tracking</h3>
-                <p>See all the places from which this site is accessed!</p>
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="9"></circle>
+                        <path d="M3 12h18M12 3c2.5 2.6 4 6 4 9s-1.5 6.4-4 9c-2.5-2.6-4-6-4-9s1.5-6.4 4-9z"></path>
+                    </svg>
+                </div>
+                <h3>Live Geo-Tracking</h3>
+                <p>See every location this site has been opened from, plotted on a real map.</p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">[MAGIC]</div>
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4z"></path>
+                    </svg>
+                </div>
                 <h3>Vibecoding Magic</h3>
-                <p>Pure unfiltered creativity and awesome interactions!</p>
+                <p>Coded entirely through conversation with an AI — no manual line-by-line effort.</p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">[FUN]</div>
-                <h3>Fun & Games</h3>
-                <p>Pull your fingers for hilarious sound effects!</p>
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M8 12a4 4 0 118 0c0 2-2 3-4 5-2-2-4-3-4-5z"></path>
+                        <path d="M12 3v2M4.5 6.5l1.4 1.4M19.5 6.5l-1.4 1.4"></path>
+                    </svg>
+                </div>
+                <h3>Pull-a-Finger</h3>
+                <p>An interactive hand with five distinct, outrageous fart sounds. Dad-approved.</p>
             </div>
         </div>
 
         <!-- Map Section -->
         <div class="section">
-            <h2>Access Locations Map</h2>
+            <h2>
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 20l-6-3V4l6 3 6-3 6 3v13l-6-3-6 3z"></path><path d="M9 4v13M15 7v13"></path></svg>
+                Access Locations Map
+            </h2>
+            <div class="stats-bar">
+                <div class="stat-box">
+                    <div class="stat-number" id="visitCount">0</div>
+                    <div class="stat-label">Visits Tracked</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" id="fartCount">0</div>
+                    <div class="stat-label">Farts Unleashed</div>
+                </div>
+            </div>
             <div id="map"></div>
             <h3 style="color: #667eea; margin-top: 20px; margin-bottom: 15px;">Recent Locations:</h3>
             <div class="location-list" id="locationList">
@@ -322,50 +380,112 @@
 
         <!-- Finger Pull Section -->
         <div class="section">
-            <h2>Pull A Finger (Dad's Favorite Feature!)</h2>
-            <p style="text-align: center; margin-bottom: 30px; color: #667eea; font-size: 1.1em;">
-                Click each finger to make outrageous fart noises!
-            </p>
+            <h2>
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12a4 4 0 118 0c0 2-2 3-4 5-2-2-4-3-4-5z"></path><path d="M12 3v2M4.5 6.5l1.4 1.4M19.5 6.5l-1.4 1.4"></path></svg>
+                Pull A Finger
+            </h2>
+            <p class="hand-instructions">Click or tap any finger on the hand below. Each one has its own signature sound.</p>
             <div class="hand-container">
-                <svg class="hand-svg" id="handSvg" width="400" height="300" viewBox="0 0 400 300">
+                <svg class="hand-svg" id="handSvg" width="440" height="380" viewBox="0 0 440 380">
+                    <defs>
+                        <linearGradient id="skinGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#ffd0a8"></stop>
+                            <stop offset="100%" stop-color="#e8a878"></stop>
+                        </linearGradient>
+                        <linearGradient id="skinGradShadow" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#f0bd94"></stop>
+                            <stop offset="100%" stop-color="#d99b6c"></stop>
+                        </linearGradient>
+                    </defs>
+
                     <!-- Palm -->
-                    <ellipse cx="200" cy="180" rx="80" ry="100" fill="#f4a460" stroke="#8b6f47" stroke-width="2"/>
+                    <path d="M 130 190
+                             C 128 260, 140 320, 175 350
+                             C 210 372, 250 372, 280 352
+                             C 312 328, 322 265, 318 195
+                             L 318 175
+                             C 318 165, 130 165, 130 175
+                             Z"
+                          fill="url(#skinGrad)" stroke="#c17e4f" stroke-width="2.5"/>
+                    <!-- palm crease details -->
+                    <path d="M 165 210 C 195 235, 245 235, 285 208" fill="none" stroke="#c17e4f" stroke-width="1.5" opacity="0.5"/>
+                    <path d="M 175 250 C 210 268, 250 268, 285 248" fill="none" stroke="#c17e4f" stroke-width="1.5" opacity="0.4"/>
 
                     <!-- Thumb -->
-                    <g id="thumb" class="finger-part" cursor="pointer">
-                        <rect x="110" y="140" width="35" height="90" rx="17" fill="#f4a460" stroke="#8b6f47" stroke-width="2"/>
-                        <circle cx="127" cy="135" r="18" fill="#f4a460" stroke="#8b6f47" stroke-width="2"/>
+                    <g id="thumb" class="finger-group" tabindex="0" role="button" aria-label="Thumb">
+                        <path d="M 90 210
+                                 C 70 200, 58 178, 66 158
+                                 C 73 140, 96 136, 110 150
+                                 C 122 162, 132 182, 138 205
+                                 L 150 235
+                                 L 118 250
+                                 Z"
+                              fill="url(#skinGradShadow)" stroke="#c17e4f" stroke-width="2.5"/>
+                        <ellipse cx="88" cy="172" rx="15" ry="12" fill="#c17e4f" opacity="0.15"/>
                     </g>
 
-                    <!-- Index Finger -->
-                    <g id="index" class="finger-part" cursor="pointer">
-                        <rect x="160" y="60" width="30" height="140" rx="15" fill="#f4a460" stroke="#8b6f47" stroke-width="2"/>
-                        <circle cx="175" cy="50" r="16" fill="#f4a460" stroke="#8b6f47" stroke-width="2"/>
+                    <!-- Pinky (drawn before others so layering looks right at the sides) -->
+                    <g id="pinky" class="finger-group" tabindex="0" role="button" aria-label="Pinky finger">
+                        <path d="M 320 210
+                                 C 340 200, 358 188, 366 168
+                                 C 372 152, 366 138, 352 136
+                                 C 340 134, 330 144, 326 160
+                                 C 320 180, 316 198, 316 215
+                                 Z"
+                              fill="url(#skinGrad)" stroke="#c17e4f" stroke-width="2.5"/>
+                        <line x1="330" y1="175" x2="352" y2="167" stroke="#c17e4f" stroke-width="1.5" opacity="0.5"/>
                     </g>
 
-                    <!-- Middle Finger -->
-                    <g id="middle" class="finger-part" cursor="pointer">
-                        <rect x="200" y="30" width="30" height="170" rx="15" fill="#f4a460" stroke="#8b6f47" stroke-width="2"/>
-                        <circle cx="215" cy="20" r="16" fill="#f4a460" stroke="#8b6f47" stroke-width="2"/>
+                    <!-- Ring finger -->
+                    <g id="ring" class="finger-group" tabindex="0" role="button" aria-label="Ring finger">
+                        <path d="M 262 185
+                                 C 262 140, 264 100, 270 72
+                                 C 273 58, 296 58, 300 72
+                                 C 306 100, 308 140, 306 185
+                                 Z"
+                              fill="url(#skinGrad)" stroke="#c17e4f" stroke-width="2.5"/>
+                        <line x1="266" y1="120" x2="303" y2="120" stroke="#c17e4f" stroke-width="1.5" opacity="0.5"/>
+                        <line x1="267" y1="150" x2="304" y2="150" stroke="#c17e4f" stroke-width="1.5" opacity="0.4"/>
+                        <rect x="273" y="60" width="24" height="16" rx="8" fill="#e8a878" stroke="#c17e4f" stroke-width="1.5"/>
                     </g>
 
-                    <!-- Ring Finger -->
-                    <g id="ring" class="finger-part" cursor="pointer">
-                        <rect x="240" y="60" width="30" height="140" rx="15" fill="#f4a460" stroke="#8b6f47" stroke-width="2"/>
-                        <circle cx="255" cy="50" r="16" fill="#f4a460" stroke="#8b6f47" stroke-width="2"/>
+                    <!-- Index finger -->
+                    <g id="index" class="finger-group" tabindex="0" role="button" aria-label="Index finger">
+                        <path d="M 168 185
+                                 C 166 138, 166 96, 172 66
+                                 C 175 50, 200 50, 204 66
+                                 C 210 96, 210 138, 208 185
+                                 Z"
+                              fill="url(#skinGrad)" stroke="#c17e4f" stroke-width="2.5"/>
+                        <line x1="170" y1="112" x2="207" y2="112" stroke="#c17e4f" stroke-width="1.5" opacity="0.5"/>
+                        <line x1="169" y1="145" x2="207" y2="145" stroke="#c17e4f" stroke-width="1.5" opacity="0.4"/>
+                        <rect x="175" y="54" width="24" height="16" rx="8" fill="#e8a878" stroke="#c17e4f" stroke-width="1.5"/>
                     </g>
 
-                    <!-- Pinky Finger -->
-                    <g id="pinky" class="finger-part" cursor="pointer">
-                        <rect x="280" y="100" width="25" height="100" rx="12" fill="#f4a460" stroke="#8b6f47" stroke-width="2"/>
-                        <circle cx="292" cy="90" r="14" fill="#f4a460" stroke="#8b6f47" stroke-width="2"/>
+                    <!-- Middle finger -->
+                    <g id="middle" class="finger-group" tabindex="0" role="button" aria-label="Middle finger">
+                        <path d="M 216 180
+                                 C 214 122, 214 68, 220 32
+                                 C 223 14, 250 14, 254 32
+                                 C 260 68, 260 122, 258 180
+                                 Z"
+                              fill="url(#skinGrad)" stroke="#c17e4f" stroke-width="2.5"/>
+                        <line x1="217" y1="90" x2="257" y2="90" stroke="#c17e4f" stroke-width="1.5" opacity="0.5"/>
+                        <line x1="216" y1="135" x2="258" y2="135" stroke="#c17e4f" stroke-width="1.5" opacity="0.4"/>
+                        <rect x="224" y="18" width="26" height="18" rx="9" fill="#e8a878" stroke="#c17e4f" stroke-width="1.5"/>
                     </g>
                 </svg>
             </div>
-            <p style="text-align: center; color: #667eea; margin-top: 20px; font-weight: bold;">
-                Each finger makes a different fart sound!
-            </p>
+            <div class="finger-label-row">
+                <span class="finger-chip">Thumb</span>
+                <span class="finger-chip">Index</span>
+                <span class="finger-chip">Middle</span>
+                <span class="finger-chip">Ring</span>
+                <span class="finger-chip">Pinky</span>
+            </div>
         </div>
+
+        <footer>Made with love (and a lot of vibecoding) for Dad</footer>
     </div>
 
     <!-- Sound Indicator -->
@@ -376,37 +496,29 @@
 
     <script>
         let map;
-        const fartMessages = [
-            'PRRRRPP!',
-            'BLAAAARP!',
-            'SPPPPPT!',
-            'THWAAAAP!',
-            'BRRRRAAA!',
-            'THEEEOOOP!',
-            'PHHHHHH!',
-            'SPLORTCH!',
-            'WAHHHHH!',
-            'TOOOOOOT!'
-        ];
+        let fartCount = 0;
+        let audioCtx = null;
 
         const fingerFarts = {
-            'thumb': { message: 'THUMB BLAST!', duration: 0.6, intensity: 0.4 },
-            'index': { message: 'LONG RIPPER!', duration: 0.8, intensity: 0.5 },
-            'middle': { message: 'THE BIG ONE!', duration: 1.0, intensity: 0.6 },
-            'ring': { message: 'SQUEAKY CLEAN!', duration: 0.5, intensity: 0.3 },
-            'pinky': { message: 'TINY BUT MIGHTY!', duration: 0.7, intensity: 0.4 }
+            'thumb':  { label: 'THUMB THUMPER',   fn: () => fartBurst({ duration: 0.55, baseFreq: 95,  freqEnd: 55,  wobbleRate: 28, wobbleDepth: 18, noiseMix: 0.55, gain: 0.9  }) },
+            'index':  { label: 'THE LONG RIPPER',  fn: () => fartBurst({ duration: 1.3,  baseFreq: 70,  freqEnd: 40,  wobbleRate: 14, wobbleDepth: 30, noiseMix: 0.6,  gain: 0.85, stutter: true }) },
+            'middle': { label: 'THE BIG ONE',      fn: () => fartBurst({ duration: 1.6,  baseFreq: 50,  freqEnd: 30,  wobbleRate: 9,  wobbleDepth: 22, noiseMix: 0.7,  gain: 1.0,  stutter: true, sub: true }) },
+            'ring':   { label: 'SQUEAKY SURPRISE', fn: () => fartBurst({ duration: 0.4,  baseFreq: 260, freqEnd: 340, wobbleRate: 40, wobbleDepth: 45, noiseMix: 0.35, gain: 0.7  }) },
+            'pinky':  { label: 'TINY BUT MIGHTY',  fn: () => fartBurst({ duration: 0.65, baseFreq: 150, freqEnd: 190, wobbleRate: 32, wobbleDepth: 25, noiseMix: 0.45, gain: 0.75, stutter: true } ) }
         };
 
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             initMap();
             initFingers();
             trackLocation();
         });
 
+        // ---------- MAP ----------
+
         function initMap() {
             map = L.map('map').setView([39.8283, -98.5795], 4);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap contributors',
+                attribution: '&copy; OpenStreetMap contributors',
                 maxZoom: 19
             }).addTo(map);
         }
@@ -414,16 +526,16 @@
         function trackLocation() {
             if ('geolocation' in navigator) {
                 navigator.geolocation.getCurrentPosition(
-                    function(position) {
-                        const lat = position.coords.latitude;
-                        const lng = position.coords.longitude;
-                        addLocationToMap(lat, lng);
+                    function (position) {
+                        addLocationToMap(position.coords.latitude, position.coords.longitude);
                     },
-                    function(error) {
+                    function (error) {
                         console.log('Geolocation error:', error);
                         addLocationToMap(37.7749, -122.4194);
                     }
                 );
+            } else {
+                addLocationToMap(37.7749, -122.4194);
             }
         }
 
@@ -446,7 +558,7 @@
                 color: '#764ba2',
                 weight: 2,
                 opacity: 1,
-                fillOpacity: 0.8
+                fillOpacity: 0.85
             }).addTo(map);
 
             marker.bindPopup(`<strong>Visited!</strong><br>Lat: ${lat.toFixed(4)}<br>Lng: ${lng.toFixed(4)}<br>${location.timestamp}`);
@@ -457,6 +569,7 @@
         function displayLocations() {
             const locations = JSON.parse(localStorage.getItem('locationHistory') || '[]');
             const locationList = document.getElementById('locationList');
+            document.getElementById('visitCount').textContent = locations.length;
 
             if (locations.length === 0) {
                 locationList.innerHTML = '<div class="location-item">No locations tracked yet</div>';
@@ -474,201 +587,164 @@
             `).join('');
         }
 
-        function createThumbFart() {
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const now = audioContext.currentTime;
-            const duration = 0.6;
+        // ---------- AUDIO: outrageous fart synth ----------
 
-            const osc = audioContext.createOscillator();
-            const gain = audioContext.createGain();
-            const filter = audioContext.createBiquadFilter();
-
-            gain.gain.setValueAtTime(0.4, now);
-            gain.gain.exponentialRampToValueAtTime(0.01, now + duration);
-
-            filter.type = 'lowpass';
-            filter.frequency.setValueAtTime(200, now);
-            filter.frequency.exponentialRampToValueAtTime(80, now + duration);
-
-            osc.frequency.setValueAtTime(150, now);
-            osc.frequency.exponentialRampToValueAtTime(100, now + duration);
-
-            osc.connect(gain);
-            gain.connect(filter);
-            filter.connect(audioContext.destination);
-
-            osc.start(now);
-            osc.stop(now + duration);
+        function getAudioContext() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            return audioCtx;
         }
 
-        function createIndexFart() {
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const now = audioContext.currentTime;
-            const duration = 0.8;
+        function makeNoiseBuffer(ctx, duration) {
+            const bufferSize = Math.max(1, Math.floor(ctx.sampleRate * duration));
+            const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+            const data = buffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) {
+                data[i] = Math.random() * 2 - 1;
+            }
+            return buffer;
+        }
 
-            const osc1 = audioContext.createOscillator();
-            const osc2 = audioContext.createOscillator();
-            const gain = audioContext.createGain();
-            const filter = audioContext.createBiquadFilter();
+        function fartBurst(opts) {
+            const ctx = getAudioContext();
+            const now = ctx.currentTime;
+            const duration = opts.duration;
 
-            gain.gain.setValueAtTime(0.5, now);
-            gain.gain.exponentialRampToValueAtTime(0.01, now + duration);
+            const masterGain = ctx.createGain();
+            masterGain.gain.setValueAtTime(0.0001, now);
+            masterGain.gain.exponentialRampToValueAtTime(opts.gain, now + 0.02);
 
-            filter.type = 'lowpass';
-            filter.frequency.setValueAtTime(250, now);
-            filter.frequency.exponentialRampToValueAtTime(60, now + duration);
+            if (opts.stutter) {
+                // choppy amplitude wobble for a "brrrap" texture
+                let t = now + 0.03;
+                const step = 1 / opts.wobbleRate;
+                while (t < now + duration) {
+                    const peak = opts.gain * (0.6 + Math.random() * 0.4);
+                    masterGain.gain.linearRampToValueAtTime(peak, t + step * 0.3);
+                    masterGain.gain.linearRampToValueAtTime(peak * 0.35, t + step * 0.75);
+                    t += step;
+                }
+            }
+            masterGain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
 
-            osc1.frequency.setValueAtTime(120, now);
-            osc1.frequency.exponentialRampToValueAtTime(70, now + duration);
+            // Tonal body: detuned oscillators with pitch wobble (vibrato) for the "wet" honk
+            const oscGain = ctx.createGain();
+            oscGain.gain.value = 1 - opts.noiseMix;
 
-            osc2.frequency.setValueAtTime(180, now);
-            osc2.frequency.exponentialRampToValueAtTime(110, now + duration);
+            const osc1 = ctx.createOscillator();
+            osc1.type = 'sawtooth';
+            const osc2 = ctx.createOscillator();
+            osc2.type = 'square';
+            osc2.detune.value = -12;
 
-            osc1.connect(gain);
-            osc2.connect(gain);
-            gain.connect(filter);
-            filter.connect(audioContext.destination);
+            const lfo = ctx.createOscillator();
+            lfo.frequency.value = opts.wobbleRate;
+            const lfoGain = ctx.createGain();
+            lfoGain.gain.value = opts.wobbleDepth;
+            lfo.connect(lfoGain);
+            lfoGain.connect(osc1.frequency);
+            lfoGain.connect(osc2.frequency);
 
+            osc1.frequency.setValueAtTime(opts.baseFreq, now);
+            osc1.frequency.exponentialRampToValueAtTime(Math.max(10, opts.freqEnd), now + duration);
+            osc2.frequency.setValueAtTime(opts.baseFreq * 1.5, now);
+            osc2.frequency.exponentialRampToValueAtTime(Math.max(10, opts.freqEnd * 1.5), now + duration);
+
+            osc1.connect(oscGain);
+            osc2.connect(oscGain);
+
+            // Noise body: filtered noise burst for grit/rasp
+            const noiseGain = ctx.createGain();
+            noiseGain.gain.value = opts.noiseMix;
+
+            const noiseSource = ctx.createBufferSource();
+            noiseSource.buffer = makeNoiseBuffer(ctx, duration);
+            const noiseFilter = ctx.createBiquadFilter();
+            noiseFilter.type = 'bandpass';
+            noiseFilter.Q.value = 0.7;
+            noiseFilter.frequency.setValueAtTime(opts.baseFreq * 2, now);
+            noiseFilter.frequency.exponentialRampToValueAtTime(Math.max(20, opts.freqEnd * 2), now + duration);
+
+            noiseSource.connect(noiseFilter);
+            noiseFilter.connect(noiseGain);
+
+            // Optional sub-bass rumble for the big one
+            let sub, subGain;
+            if (opts.sub) {
+                sub = ctx.createOscillator();
+                sub.type = 'sine';
+                sub.frequency.setValueAtTime(opts.baseFreq * 0.5, now);
+                sub.frequency.exponentialRampToValueAtTime(Math.max(15, opts.freqEnd * 0.5), now + duration);
+                subGain = ctx.createGain();
+                subGain.gain.value = 0.5;
+                sub.connect(subGain);
+                subGain.connect(masterGain);
+            }
+
+            // Final tone-shaping filter for that authentic "toilet bowl" resonance
+            const finalFilter = ctx.createBiquadFilter();
+            finalFilter.type = 'lowpass';
+            finalFilter.frequency.setValueAtTime(opts.baseFreq * 4, now);
+            finalFilter.frequency.exponentialRampToValueAtTime(Math.max(80, opts.freqEnd * 3), now + duration);
+            finalFilter.Q.value = 1.2;
+
+            oscGain.connect(finalFilter);
+            noiseGain.connect(finalFilter);
+            finalFilter.connect(masterGain);
+            masterGain.connect(ctx.destination);
+
+            lfo.start(now);
             osc1.start(now);
             osc2.start(now);
+            noiseSource.start(now);
+            lfo.stop(now + duration);
             osc1.stop(now + duration);
             osc2.stop(now + duration);
-        }
-
-        function createMiddleFart() {
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const now = audioContext.currentTime;
-            const duration = 1.0;
-
-            const osc1 = audioContext.createOscillator();
-            const osc2 = audioContext.createOscillator();
-            const osc3 = audioContext.createOscillator();
-            const gain = audioContext.createGain();
-            const filter = audioContext.createBiquadFilter();
-            const filter2 = audioContext.createBiquadFilter();
-
-            gain.gain.setValueAtTime(0.6, now);
-            gain.gain.exponentialRampToValueAtTime(0.01, now + duration);
-
-            filter.type = 'lowpass';
-            filter.frequency.setValueAtTime(300, now);
-            filter.frequency.exponentialRampToValueAtTime(40, now + duration);
-
-            filter2.type = 'highpass';
-            filter2.frequency.setValueAtTime(100, now);
-
-            osc1.frequency.setValueAtTime(200, now);
-            osc1.frequency.exponentialRampToValueAtTime(80, now + duration);
-
-            osc2.frequency.setValueAtTime(140, now);
-            osc2.frequency.exponentialRampToValueAtTime(90, now + duration);
-
-            osc3.frequency.setValueAtTime(250, now);
-            osc3.frequency.exponentialRampToValueAtTime(120, now + duration);
-
-            osc1.connect(gain);
-            osc2.connect(gain);
-            osc3.connect(gain);
-            gain.connect(filter);
-            filter.connect(filter2);
-            filter2.connect(audioContext.destination);
-
-            osc1.start(now);
-            osc2.start(now);
-            osc3.start(now);
-            osc1.stop(now + duration);
-            osc2.stop(now + duration);
-            osc3.stop(now + duration);
-        }
-
-        function createRingFart() {
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const now = audioContext.currentTime;
-            const duration = 0.5;
-
-            const osc = audioContext.createOscillator();
-            const gain = audioContext.createGain();
-            const filter = audioContext.createBiquadFilter();
-
-            gain.gain.setValueAtTime(0.3, now);
-            gain.gain.exponentialRampToValueAtTime(0.01, now + duration);
-
-            filter.type = 'highpass';
-            filter.frequency.setValueAtTime(150, now);
-            filter.frequency.exponentialRampToValueAtTime(300, now + duration);
-
-            osc.frequency.setValueAtTime(300, now);
-            osc.frequency.exponentialRampToValueAtTime(280, now + duration);
-
-            osc.connect(gain);
-            gain.connect(filter);
-            filter.connect(audioContext.destination);
-
-            osc.start(now);
-            osc.stop(now + duration);
-        }
-
-        function createPinkyFart() {
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const now = audioContext.currentTime;
-            const duration = 0.7;
-
-            const osc1 = audioContext.createOscillator();
-            const osc2 = audioContext.createOscillator();
-            const gain = audioContext.createGain();
-            const filter = audioContext.createBiquadFilter();
-
-            gain.gain.setValueAtTime(0.4, now);
-            gain.gain.exponentialRampToValueAtTime(0.01, now + duration);
-
-            filter.type = 'lowpass';
-            filter.frequency.setValueAtTime(180, now);
-            filter.frequency.exponentialRampToValueAtTime(70, now + duration);
-
-            osc1.frequency.setValueAtTime(100, now);
-            osc1.frequency.exponentialRampToValueAtTime(120, now + duration);
-
-            osc2.frequency.setValueAtTime(160, now);
-            osc2.frequency.exponentialRampToValueAtTime(140, now + duration);
-
-            osc1.connect(gain);
-            osc2.connect(gain);
-            gain.connect(filter);
-            filter.connect(audioContext.destination);
-
-            osc1.start(now);
-            osc2.start(now);
-            osc1.stop(now + duration);
-            osc2.stop(now + duration);
+            noiseSource.stop(now + duration);
+            if (opts.sub) {
+                sub.start(now);
+                sub.stop(now + duration);
+            }
         }
 
         function showSoundIndicator(message) {
             const indicator = document.getElementById('soundIndicator');
+            indicator.classList.remove('show');
+            void indicator.offsetWidth; // restart animation
             indicator.textContent = message;
             indicator.classList.add('show');
-            setTimeout(() => {
-                indicator.classList.remove('show');
-            }, 1500);
+            clearTimeout(showSoundIndicator._t);
+            showSoundIndicator._t = setTimeout(() => indicator.classList.remove('show'), 1600);
         }
 
         function initFingers() {
-            const fingerMap = {
-                'thumb': createThumbFart,
-                'index': createIndexFart,
-                'middle': createMiddleFart,
-                'ring': createRingFart,
-                'pinky': createPinkyFart
-            };
+            Object.keys(fingerFarts).forEach(function (fingerId) {
+                const el = document.getElementById(fingerId);
+                if (!el) return;
 
-            for (const [fingerId, fartFunc] of Object.entries(fingerMap)) {
-                const fingerElement = document.getElementById(fingerId);
-                if (fingerElement) {
-                    fingerElement.addEventListener('click', function() {
-                        fartFunc();
-                        showSoundIndicator(fingerFarts[fingerId].message);
-                    });
+                function trigger() {
+                    fingerFarts[fingerId].fn();
+                    showSoundIndicator(fingerFarts[fingerId].label);
+                    fartCount++;
+                    document.getElementById('fartCount').textContent = fartCount;
+
+                    el.classList.remove('pulling');
+                    void el.offsetWidth;
+                    el.classList.add('pulling');
                 }
-            }
+
+                el.addEventListener('click', trigger);
+                el.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        trigger();
+                    }
+                });
+            });
         }
     </script>
 </body>
