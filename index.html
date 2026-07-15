@@ -126,8 +126,14 @@
         }
 
         .feature-icon {
-            font-size: 3em;
+            font-size: 2.5em;
             margin-bottom: 10px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffd700;
+            font-weight: bold;
         }
 
         .feature-card h3 {
@@ -181,44 +187,30 @@
             opacity: 0.9;
         }
 
-        /* Finger Pull Section */
-        .fingers-container {
+        /* Hand and Finger Section */
+        .hand-container {
             display: flex;
             justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-            align-items: flex-end;
+            margin: 40px 0;
         }
 
-        .finger {
+        .hand-svg {
+            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
+            max-width: 100%;
+            height: auto;
+        }
+
+        .finger-part {
             cursor: pointer;
-            user-select: none;
-            transition: transform 0.1s;
-            position: relative;
+            transition: filter 0.05s;
         }
 
-        .finger:active {
-            transform: scaleY(0.7);
+        .finger-part:hover {
+            filter: brightness(1.2);
         }
 
-        .finger-svg {
-            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
-            transition: transform 0.2s;
-        }
-
-        .finger:hover .finger-svg {
-            transform: scale(1.1);
-        }
-
-        .finger-label {
-            position: absolute;
-            bottom: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: white;
-            font-weight: bold;
-            font-size: 0.9em;
-            white-space: nowrap;
+        .finger-part:active {
+            filter: brightness(0.8);
         }
 
         /* Sound effect indicator */
@@ -227,13 +219,14 @@
             position: fixed;
             top: 20px;
             right: 20px;
-            background: #ffd700;
+            background: linear-gradient(135deg, #ffd700 0%, #ff9500 100%);
             color: #333;
             padding: 15px 25px;
             border-radius: 25px;
             font-weight: bold;
             animation: slideInRight 0.3s ease-out;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            font-size: 1.1em;
         }
 
         .sound-indicator.show {
@@ -251,22 +244,22 @@
             }
         }
 
-        /* Floating particles background */
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-20px);
-            }
+        .fart-text {
+            animation: popIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
 
-        .particle {
-            position: fixed;
-            pointer-events: none;
-            font-size: 2em;
-            animation: float 3s infinite;
-            opacity: 0.5;
+        @keyframes popIn {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            70% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         /* Responsive */
@@ -283,8 +276,8 @@
                 height: 300px;
             }
 
-            .fingers-container {
-                gap: 15px;
+            .hand-svg {
+                max-width: 90%;
             }
         }
     </style>
@@ -293,25 +286,25 @@
     <div class="container">
         <!-- Hero Section -->
         <div class="hero">
-            <h1 class="greeting">👋 HI DAD! 👋</h1>
-            <p class="subtitle">Welcome to VibeCoding Powers! 🚀</p>
-            <p class="tagline">This website is powered by pure vibecoding energy ✨</p>
+            <h1 class="greeting">HI DAD!</h1>
+            <p class="subtitle">Welcome to VibeCoding Powers!</p>
+            <p class="tagline">This website is powered by pure vibecoding energy</p>
         </div>
 
         <!-- Cool Features -->
         <div class="features">
             <div class="feature-card">
-                <div class="feature-icon">🌍</div>
+                <div class="feature-icon">[MAP]</div>
                 <h3>Geo-Tracking</h3>
                 <p>See all the places from which this site is accessed!</p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">🎉</div>
+                <div class="feature-icon">[MAGIC]</div>
                 <h3>Vibecoding Magic</h3>
                 <p>Pure unfiltered creativity and awesome interactions!</p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">💨</div>
+                <div class="feature-icon">[FUN]</div>
                 <h3>Fun & Games</h3>
                 <p>Pull your fingers for hilarious sound effects!</p>
             </div>
@@ -319,7 +312,7 @@
 
         <!-- Map Section -->
         <div class="section">
-            <h2>🗺️ Access Locations Map</h2>
+            <h2>Access Locations Map</h2>
             <div id="map"></div>
             <h3 style="color: #667eea; margin-top: 20px; margin-bottom: 15px;">Recent Locations:</h3>
             <div class="location-list" id="locationList">
@@ -329,46 +322,95 @@
 
         <!-- Finger Pull Section -->
         <div class="section">
-            <h2>🎈 Pull A Finger (Dad's Favorite Feature!)</h2>
+            <h2>Pull A Finger (Dad's Favorite Feature!)</h2>
             <p style="text-align: center; margin-bottom: 30px; color: #667eea; font-size: 1.1em;">
-                Click and pull the fingers to make funny noises! 🤭
+                Click each finger to make outrageous fart noises!
             </p>
-            <div class="fingers-container" id="fingersContainer">
-                <!-- Fingers will be generated by JavaScript -->
+            <div class="hand-container">
+                <svg class="hand-svg" id="handSvg" width="400" height="300" viewBox="0 0 400 300">
+                    <!-- Palm -->
+                    <ellipse cx="200" cy="180" rx="80" ry="100" fill="#f4a460" stroke="#8b6f47" stroke-width="2"/>
+
+                    <!-- Thumb -->
+                    <g id="thumb" class="finger-part" cursor="pointer">
+                        <rect x="110" y="140" width="35" height="90" rx="17" fill="#f4a460" stroke="#8b6f47" stroke-width="2"/>
+                        <circle cx="127" cy="135" r="18" fill="#f4a460" stroke="#8b6f47" stroke-width="2"/>
+                    </g>
+
+                    <!-- Index Finger -->
+                    <g id="index" class="finger-part" cursor="pointer">
+                        <rect x="160" y="60" width="30" height="140" rx="15" fill="#f4a460" stroke="#8b6f47" stroke-width="2"/>
+                        <circle cx="175" cy="50" r="16" fill="#f4a460" stroke="#8b6f47" stroke-width="2"/>
+                    </g>
+
+                    <!-- Middle Finger -->
+                    <g id="middle" class="finger-part" cursor="pointer">
+                        <rect x="200" y="30" width="30" height="170" rx="15" fill="#f4a460" stroke="#8b6f47" stroke-width="2"/>
+                        <circle cx="215" cy="20" r="16" fill="#f4a460" stroke="#8b6f47" stroke-width="2"/>
+                    </g>
+
+                    <!-- Ring Finger -->
+                    <g id="ring" class="finger-part" cursor="pointer">
+                        <rect x="240" y="60" width="30" height="140" rx="15" fill="#f4a460" stroke="#8b6f47" stroke-width="2"/>
+                        <circle cx="255" cy="50" r="16" fill="#f4a460" stroke="#8b6f47" stroke-width="2"/>
+                    </g>
+
+                    <!-- Pinky Finger -->
+                    <g id="pinky" class="finger-part" cursor="pointer">
+                        <rect x="280" y="100" width="25" height="100" rx="12" fill="#f4a460" stroke="#8b6f47" stroke-width="2"/>
+                        <circle cx="292" cy="90" r="14" fill="#f4a460" stroke="#8b6f47" stroke-width="2"/>
+                    </g>
+                </svg>
             </div>
+            <p style="text-align: center; color: #667eea; margin-top: 20px; font-weight: bold;">
+                Each finger makes a different fart sound!
+            </p>
         </div>
     </div>
 
     <!-- Sound Indicator -->
-    <div class="sound-indicator" id="soundIndicator">🔊 PRRRRPP!</div>
+    <div class="sound-indicator" id="soundIndicator"></div>
 
     <!-- Leaflet Map Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 
     <script>
-        // Global variables
         let map;
-        let accessLocations = [];
-        let soundCount = 0;
+        const fartMessages = [
+            'PRRRRPP!',
+            'BLAAAARP!',
+            'SPPPPPT!',
+            'THWAAAAP!',
+            'BRRRRAAA!',
+            'THEEEOOOP!',
+            'PHHHHHH!',
+            'SPLORTCH!',
+            'WAHHHHH!',
+            'TOOOOOOT!'
+        ];
 
-        // Initialize the application
+        const fingerFarts = {
+            'thumb': { message: 'THUMB BLAST!', duration: 0.6, intensity: 0.4 },
+            'index': { message: 'LONG RIPPER!', duration: 0.8, intensity: 0.5 },
+            'middle': { message: 'THE BIG ONE!', duration: 1.0, intensity: 0.6 },
+            'ring': { message: 'SQUEAKY CLEAN!', duration: 0.5, intensity: 0.3 },
+            'pinky': { message: 'TINY BUT MIGHTY!', duration: 0.7, intensity: 0.4 }
+        };
+
         document.addEventListener('DOMContentLoaded', function() {
             initMap();
             initFingers();
             trackLocation();
-            createParticles();
         });
 
-        // Initialize the map
         function initMap() {
-            map = L.map('map').setView([39.8283, -98.5795], 4); // Center of USA
+            map = L.map('map').setView([39.8283, -98.5795], 4);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '© OpenStreetMap contributors',
                 maxZoom: 19
             }).addTo(map);
         }
 
-        // Track user location
         function trackLocation() {
             if ('geolocation' in navigator) {
                 navigator.geolocation.getCurrentPosition(
@@ -379,14 +421,12 @@
                     },
                     function(error) {
                         console.log('Geolocation error:', error);
-                        // Use default location if geolocation denied
-                        addLocationToMap(37.7749, -122.4194); // San Francisco
+                        addLocationToMap(37.7749, -122.4194);
                     }
                 );
             }
         }
 
-        // Add location to map and storage
         function addLocationToMap(lat, lng) {
             const location = {
                 lat: lat.toFixed(4),
@@ -394,15 +434,12 @@
                 timestamp: new Date().toLocaleString()
             };
 
-            // Get existing locations from localStorage
             let locations = JSON.parse(localStorage.getItem('locationHistory') || '[]');
             locations.push(location);
             localStorage.setItem('locationHistory', JSON.stringify(locations));
 
-            // Display all locations
             displayLocations();
 
-            // Add marker to map
             const marker = L.circleMarker([lat, lng], {
                 radius: 8,
                 fillColor: '#667eea',
@@ -414,11 +451,9 @@
 
             marker.bindPopup(`<strong>Visited!</strong><br>Lat: ${lat.toFixed(4)}<br>Lng: ${lng.toFixed(4)}<br>${location.timestamp}`);
 
-            // Zoom to most recent location
             map.setView([lat, lng], 10);
         }
 
-        // Display all locations
         function displayLocations() {
             const locations = JSON.parse(localStorage.getItem('locationHistory') || '[]');
             const locationList = document.getElementById('locationList');
@@ -439,102 +474,200 @@
             `).join('');
         }
 
-        // Create fart sounds
-        function createFartSound() {
+        function createThumbFart() {
             const audioContext = new (window.AudioContext || window.webkitAudioContext)();
             const now = audioContext.currentTime;
+            const duration = 0.6;
 
-            // Create multiple oscillators for that authentic fart sound
+            const osc = audioContext.createOscillator();
+            const gain = audioContext.createGain();
+            const filter = audioContext.createBiquadFilter();
+
+            gain.gain.setValueAtTime(0.4, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + duration);
+
+            filter.type = 'lowpass';
+            filter.frequency.setValueAtTime(200, now);
+            filter.frequency.exponentialRampToValueAtTime(80, now + duration);
+
+            osc.frequency.setValueAtTime(150, now);
+            osc.frequency.exponentialRampToValueAtTime(100, now + duration);
+
+            osc.connect(gain);
+            gain.connect(filter);
+            filter.connect(audioContext.destination);
+
+            osc.start(now);
+            osc.stop(now + duration);
+        }
+
+        function createIndexFart() {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const now = audioContext.currentTime;
+            const duration = 0.8;
+
+            const osc1 = audioContext.createOscillator();
+            const osc2 = audioContext.createOscillator();
+            const gain = audioContext.createGain();
+            const filter = audioContext.createBiquadFilter();
+
+            gain.gain.setValueAtTime(0.5, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + duration);
+
+            filter.type = 'lowpass';
+            filter.frequency.setValueAtTime(250, now);
+            filter.frequency.exponentialRampToValueAtTime(60, now + duration);
+
+            osc1.frequency.setValueAtTime(120, now);
+            osc1.frequency.exponentialRampToValueAtTime(70, now + duration);
+
+            osc2.frequency.setValueAtTime(180, now);
+            osc2.frequency.exponentialRampToValueAtTime(110, now + duration);
+
+            osc1.connect(gain);
+            osc2.connect(gain);
+            gain.connect(filter);
+            filter.connect(audioContext.destination);
+
+            osc1.start(now);
+            osc2.start(now);
+            osc1.stop(now + duration);
+            osc2.stop(now + duration);
+        }
+
+        function createMiddleFart() {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const now = audioContext.currentTime;
+            const duration = 1.0;
+
             const osc1 = audioContext.createOscillator();
             const osc2 = audioContext.createOscillator();
             const osc3 = audioContext.createOscillator();
             const gain = audioContext.createGain();
             const filter = audioContext.createBiquadFilter();
+            const filter2 = audioContext.createBiquadFilter();
 
-            // Set up gain envelope
-            gain.gain.setValueAtTime(0.3, now);
-            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
+            gain.gain.setValueAtTime(0.6, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + duration);
 
-            // Filter for that "wet" quality
             filter.type = 'lowpass';
-            filter.frequency.setValueAtTime(150, now);
-            filter.frequency.exponentialRampToValueAtTime(50, now + 0.5);
+            filter.frequency.setValueAtTime(300, now);
+            filter.frequency.exponentialRampToValueAtTime(40, now + duration);
 
-            // Frequency changes for comedic effect
-            osc1.frequency.setValueAtTime(80, now);
-            osc1.frequency.exponentialRampToValueAtTime(60, now + 0.5);
+            filter2.type = 'highpass';
+            filter2.frequency.setValueAtTime(100, now);
 
-            osc2.frequency.setValueAtTime(120, now);
-            osc2.frequency.exponentialRampToValueAtTime(80, now + 0.5);
+            osc1.frequency.setValueAtTime(200, now);
+            osc1.frequency.exponentialRampToValueAtTime(80, now + duration);
 
-            osc3.frequency.setValueAtTime(160, now);
-            osc3.frequency.exponentialRampToValueAtTime(90, now + 0.5);
+            osc2.frequency.setValueAtTime(140, now);
+            osc2.frequency.exponentialRampToValueAtTime(90, now + duration);
 
-            // Connect everything
+            osc3.frequency.setValueAtTime(250, now);
+            osc3.frequency.exponentialRampToValueAtTime(120, now + duration);
+
             osc1.connect(gain);
             osc2.connect(gain);
             osc3.connect(gain);
             gain.connect(filter);
-            filter.connect(audioContext.destination);
+            filter.connect(filter2);
+            filter2.connect(audioContext.destination);
 
-            // Start and stop
             osc1.start(now);
             osc2.start(now);
             osc3.start(now);
-            osc1.stop(now + 0.5);
-            osc2.stop(now + 0.5);
-            osc3.stop(now + 0.5);
-
-            // Show indicator
-            showSoundIndicator();
+            osc1.stop(now + duration);
+            osc2.stop(now + duration);
+            osc3.stop(now + duration);
         }
 
-        // Show sound effect indicator
-        function showSoundIndicator() {
+        function createRingFart() {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const now = audioContext.currentTime;
+            const duration = 0.5;
+
+            const osc = audioContext.createOscillator();
+            const gain = audioContext.createGain();
+            const filter = audioContext.createBiquadFilter();
+
+            gain.gain.setValueAtTime(0.3, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + duration);
+
+            filter.type = 'highpass';
+            filter.frequency.setValueAtTime(150, now);
+            filter.frequency.exponentialRampToValueAtTime(300, now + duration);
+
+            osc.frequency.setValueAtTime(300, now);
+            osc.frequency.exponentialRampToValueAtTime(280, now + duration);
+
+            osc.connect(gain);
+            gain.connect(filter);
+            filter.connect(audioContext.destination);
+
+            osc.start(now);
+            osc.stop(now + duration);
+        }
+
+        function createPinkyFart() {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const now = audioContext.currentTime;
+            const duration = 0.7;
+
+            const osc1 = audioContext.createOscillator();
+            const osc2 = audioContext.createOscillator();
+            const gain = audioContext.createGain();
+            const filter = audioContext.createBiquadFilter();
+
+            gain.gain.setValueAtTime(0.4, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + duration);
+
+            filter.type = 'lowpass';
+            filter.frequency.setValueAtTime(180, now);
+            filter.frequency.exponentialRampToValueAtTime(70, now + duration);
+
+            osc1.frequency.setValueAtTime(100, now);
+            osc1.frequency.exponentialRampToValueAtTime(120, now + duration);
+
+            osc2.frequency.setValueAtTime(160, now);
+            osc2.frequency.exponentialRampToValueAtTime(140, now + duration);
+
+            osc1.connect(gain);
+            osc2.connect(gain);
+            gain.connect(filter);
+            filter.connect(audioContext.destination);
+
+            osc1.start(now);
+            osc2.start(now);
+            osc1.stop(now + duration);
+            osc2.stop(now + duration);
+        }
+
+        function showSoundIndicator(message) {
             const indicator = document.getElementById('soundIndicator');
+            indicator.textContent = message;
             indicator.classList.add('show');
             setTimeout(() => {
                 indicator.classList.remove('show');
-            }, 1000);
+            }, 1500);
         }
 
-        // Initialize fingers
         function initFingers() {
-            const fingers = ['👆', '👉', '☝️', '👇', '✌️'];
-            const labels = ['Thumb', 'Index', 'Middle', 'Ring', 'Pinky'];
-            const container = document.getElementById('fingersContainer');
+            const fingerMap = {
+                'thumb': createThumbFart,
+                'index': createIndexFart,
+                'middle': createMiddleFart,
+                'ring': createRingFart,
+                'pinky': createPinkyFart
+            };
 
-            fingers.forEach((finger, idx) => {
-                const fingerEl = document.createElement('div');
-                fingerEl.className = 'finger';
-                fingerEl.innerHTML = `
-                    <svg class="finger-svg" width="80" height="120" viewBox="0 0 80 120">
-                        <text x="40" y="90" font-size="80" text-anchor="middle" dominant-baseline="middle">${finger}</text>
-                    </svg>
-                    <div class="finger-label">${labels[idx]}</div>
-                `;
-
-                fingerEl.addEventListener('click', () => {
-                    createFartSound();
-                    soundCount++;
-                });
-
-                container.appendChild(fingerEl);
-            });
-        }
-
-        // Create floating particles for background
-        function createParticles() {
-            const particles = ['✨', '🎉', '💫', '⭐', '🌟'];
-            for (let i = 0; i < 15; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.textContent = particles[Math.floor(Math.random() * particles.length)];
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.top = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 3 + 's';
-                particle.style.animationDuration = (3 + Math.random() * 2) + 's';
-                document.body.appendChild(particle);
+            for (const [fingerId, fartFunc] of Object.entries(fingerMap)) {
+                const fingerElement = document.getElementById(fingerId);
+                if (fingerElement) {
+                    fingerElement.addEventListener('click', function() {
+                        fartFunc();
+                        showSoundIndicator(fingerFarts[fingerId].message);
+                    });
+                }
             }
         }
     </script>
