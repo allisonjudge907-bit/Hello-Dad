@@ -508,16 +508,21 @@
         let audioCtx = null;
 
         const fingerFarts = {
-            'thumb':  { label: 'THUMB THUMPER',   fn: () => fartBurst({ duration: 0.55, baseFreq: 95,  freqEnd: 55,  wobbleRate: 28, wobbleDepth: 18, noiseMix: 0.55, gain: 0.9  }) },
-            'index':  { label: 'THE LONG RIPPER',  fn: () => fartBurst({ duration: 1.3,  baseFreq: 70,  freqEnd: 40,  wobbleRate: 14, wobbleDepth: 30, noiseMix: 0.6,  gain: 0.85, stutter: true }) },
-            'middle': { label: 'THE BIG ONE',      fn: () => fartBurst({ duration: 1.6,  baseFreq: 50,  freqEnd: 30,  wobbleRate: 9,  wobbleDepth: 22, noiseMix: 0.7,  gain: 1.0,  stutter: true, sub: true }) },
-            'ring':   { label: 'SQUEAKY SURPRISE', fn: () => fartBurst({ duration: 0.4,  baseFreq: 260, freqEnd: 340, wobbleRate: 40, wobbleDepth: 45, noiseMix: 0.35, gain: 0.7  }) },
-            'pinky':  { label: 'TINY BUT MIGHTY',  fn: () => fartBurst({ duration: 0.65, baseFreq: 150, freqEnd: 190, wobbleRate: 32, wobbleDepth: 25, noiseMix: 0.45, gain: 0.75, stutter: true } ) }
+            'thumb':  { label: 'THUMB THUMPER',    fn: () => fartBurst({ duration: 0.9,  baseFreq: 85,  freqEnd: 45,  wobbleRate: 24, wobbleDepth: 20, noiseMix: 0.6,  gain: 0.95, stutter: true, sub: true, subLevel: 0.6, bendRate: 2.6, bendDepth: 30 }) },
+            'index':  { label: 'THE LONG RIPPER',  fn: () => fartBurst({ duration: 2.0,  baseFreq: 65,  freqEnd: 35,  wobbleRate: 13, wobbleDepth: 34, noiseMix: 0.65, gain: 0.9,  stutter: true, sub: true, subLevel: 0.55, bendRate: 1.8, bendDepth: 40 }) },
+            'middle': { label: 'THE BIG ONE',      fn: () => fartBurst({ duration: 2.6,  baseFreq: 42,  freqEnd: 24,  wobbleRate: 8,  wobbleDepth: 26, noiseMix: 0.75, gain: 1.0,  stutter: true, sub: true, subLevel: 0.9,  bendRate: 1.2, bendDepth: 55 }) },
+            'ring':   { label: 'SQUEAKY SURPRISE', fn: () => fartBurst({ duration: 0.55, baseFreq: 240, freqEnd: 320, wobbleRate: 38, wobbleDepth: 50, noiseMix: 0.4,  gain: 0.75, stutter: true, sub: false, bendRate: 5,   bendDepth: 60 }) },
+            'pinky':  { label: 'TINY BUT MIGHTY',  fn: () => fartBurst({ duration: 1.1,  baseFreq: 130, freqEnd: 170, wobbleRate: 30, wobbleDepth: 28, noiseMix: 0.5,  gain: 0.8,  stutter: true, sub: true, subLevel: 0.4,  bendRate: 3.2, bendDepth: 35 }) }
         };
 
         document.addEventListener('DOMContentLoaded', function () {
-            initMap();
+            // initFingers must not be blocked by a map/network failure
             initFingers();
+            try {
+                initMap();
+            } catch (e) {
+                console.error('Map failed to initialize:', e);
+            }
             trackLocation();
         });
 
@@ -559,6 +564,8 @@
             localStorage.setItem('locationHistory', JSON.stringify(locations));
 
             displayLocations();
+
+            if (!map) return;
 
             const marker = L.circleMarker([lat, lng], {
                 radius: 8,
@@ -617,29 +624,71 @@
             return buffer;
         }
 
+        // Bathroom-style slap-back echo: a damped feedback delay mixed under the dry signal.
+        function connectWithBathroomEcho(ctx, sourceNode, destination) {
+            sourceNode.connect(destination);
+
+            const delay = ctx.createDelay(1.0);
+            delay.delayTime.value = 0.14;
+
+            const feedback = ctx.createGain();
+            feedback.gain.value = 0.42;
+
+            const echoFilter = ctx.createBiquadFilter();
+            echoFilter.type = 'lowpass';
+            echoFilter.frequency.value = 1600;
+
+            const wetGain = ctx.createGain();
+            wetGain.gain.value = 0.4;
+
+            sourceNode.connect(delay);
+            delay.connect(echoFilter);
+            echoFilter.connect(feedback);
+            feedback.connect(delay);
+            echoFilter.connect(wetGain);
+            wetGain.connect(destination);
+        }
+
         function fartBurst(opts) {
             const ctx = getAudioContext();
             const now = ctx.currentTime;
             const duration = opts.duration;
+            const subLevel = opts.subLevel || 0.5;
 
             const masterGain = ctx.createGain();
             masterGain.gain.setValueAtTime(0.0001, now);
-            masterGain.gain.exponentialRampToValueAtTime(opts.gain, now + 0.02);
+            masterGain.gain.exponentialRampToValueAtTime(opts.gain, now + 0.025);
 
             if (opts.stutter) {
-                // choppy amplitude wobble for a "brrrap" texture
-                let t = now + 0.03;
+                // irregular choppy amplitude wobble for a long, wet, sputtery texture
+                let t = now + 0.04;
                 const step = 1 / opts.wobbleRate;
                 while (t < now + duration) {
-                    const peak = opts.gain * (0.6 + Math.random() * 0.4);
-                    masterGain.gain.linearRampToValueAtTime(peak, t + step * 0.3);
-                    masterGain.gain.linearRampToValueAtTime(peak * 0.35, t + step * 0.75);
-                    t += step;
+                    const peak = opts.gain * (0.55 + Math.random() * 0.5);
+                    const holdRatio = 0.2 + Math.random() * 0.25;
+                    masterGain.gain.linearRampToValueAtTime(peak, t + step * holdRatio);
+                    masterGain.gain.linearRampToValueAtTime(peak * (0.15 + Math.random() * 0.25), t + step * (holdRatio + 0.35));
+                    t += step * (0.8 + Math.random() * 0.4);
                 }
             }
             masterGain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
 
-            // Tonal body: detuned oscillators with pitch wobble (vibrato) for the "wet" honk
+            // Cartoonish pitch-bend LFO: slow, wide "wah" slide layered over the fast rasp wobble
+            const bendLfo = ctx.createOscillator();
+            bendLfo.type = 'sine';
+            bendLfo.frequency.value = opts.bendRate || 2;
+            const bendGain = ctx.createGain();
+            bendGain.gain.value = opts.bendDepth || 25;
+            bendLfo.connect(bendGain);
+
+            // Fast rasp wobble for wet grit
+            const lfo = ctx.createOscillator();
+            lfo.frequency.value = opts.wobbleRate;
+            const lfoGain = ctx.createGain();
+            lfoGain.gain.value = opts.wobbleDepth;
+            lfo.connect(lfoGain);
+
+            // Tonal body: detuned oscillators carrying both wobble + cartoon bend
             const oscGain = ctx.createGain();
             oscGain.gain.value = 1 - opts.noiseMix;
 
@@ -647,25 +696,22 @@
             osc1.type = 'sawtooth';
             const osc2 = ctx.createOscillator();
             osc2.type = 'square';
-            osc2.detune.value = -12;
+            osc2.detune.value = -14;
 
-            const lfo = ctx.createOscillator();
-            lfo.frequency.value = opts.wobbleRate;
-            const lfoGain = ctx.createGain();
-            lfoGain.gain.value = opts.wobbleDepth;
-            lfo.connect(lfoGain);
             lfoGain.connect(osc1.frequency);
             lfoGain.connect(osc2.frequency);
+            bendGain.connect(osc1.frequency);
+            bendGain.connect(osc2.frequency);
 
             osc1.frequency.setValueAtTime(opts.baseFreq, now);
-            osc1.frequency.exponentialRampToValueAtTime(Math.max(10, opts.freqEnd), now + duration);
+            osc1.frequency.exponentialRampToValueAtTime(Math.max(8, opts.freqEnd), now + duration);
             osc2.frequency.setValueAtTime(opts.baseFreq * 1.5, now);
-            osc2.frequency.exponentialRampToValueAtTime(Math.max(10, opts.freqEnd * 1.5), now + duration);
+            osc2.frequency.exponentialRampToValueAtTime(Math.max(8, opts.freqEnd * 1.5), now + duration);
 
             osc1.connect(oscGain);
             osc2.connect(oscGain);
 
-            // Noise body: filtered noise burst for grit/rasp
+            // Noise body: filtered noise burst for wet grit/rasp
             const noiseGain = ctx.createGain();
             noiseGain.gain.value = opts.noiseMix;
 
@@ -676,39 +722,48 @@
             noiseFilter.Q.value = 0.7;
             noiseFilter.frequency.setValueAtTime(opts.baseFreq * 2, now);
             noiseFilter.frequency.exponentialRampToValueAtTime(Math.max(20, opts.freqEnd * 2), now + duration);
+            bendGain.connect(noiseFilter.frequency);
 
             noiseSource.connect(noiseFilter);
             noiseFilter.connect(noiseGain);
 
-            // Optional sub-bass rumble for the big one
+            // Deep booming sub-bass rumble
             let sub, subGain;
             if (opts.sub) {
                 sub = ctx.createOscillator();
                 sub.type = 'sine';
                 sub.frequency.setValueAtTime(opts.baseFreq * 0.5, now);
-                sub.frequency.exponentialRampToValueAtTime(Math.max(15, opts.freqEnd * 0.5), now + duration);
+                sub.frequency.exponentialRampToValueAtTime(Math.max(12, opts.freqEnd * 0.5), now + duration);
                 subGain = ctx.createGain();
-                subGain.gain.value = 0.5;
+                subGain.gain.value = subLevel;
                 sub.connect(subGain);
                 subGain.connect(masterGain);
             }
 
-            // Final tone-shaping filter for that authentic "toilet bowl" resonance
+            // Final tone-shaping filter with a low-end boost for that booming, resonant quality
             const finalFilter = ctx.createBiquadFilter();
             finalFilter.type = 'lowpass';
             finalFilter.frequency.setValueAtTime(opts.baseFreq * 4, now);
-            finalFilter.frequency.exponentialRampToValueAtTime(Math.max(80, opts.freqEnd * 3), now + duration);
-            finalFilter.Q.value = 1.2;
+            finalFilter.frequency.exponentialRampToValueAtTime(Math.max(70, opts.freqEnd * 3), now + duration);
+            finalFilter.Q.value = 1.4;
+
+            const bassBoost = ctx.createBiquadFilter();
+            bassBoost.type = 'lowshelf';
+            bassBoost.frequency.value = 120;
+            bassBoost.gain.value = 6;
 
             oscGain.connect(finalFilter);
             noiseGain.connect(finalFilter);
-            finalFilter.connect(masterGain);
-            masterGain.connect(ctx.destination);
+            finalFilter.connect(bassBoost);
+            bassBoost.connect(masterGain);
+            connectWithBathroomEcho(ctx, masterGain, ctx.destination);
 
+            bendLfo.start(now);
             lfo.start(now);
             osc1.start(now);
             osc2.start(now);
             noiseSource.start(now);
+            bendLfo.stop(now + duration);
             lfo.stop(now + duration);
             osc1.stop(now + duration);
             osc2.stop(now + duration);
