@@ -1,5 +1,18 @@
 # 💨 Fart Samples Go Here
 
+## Current samples
+
+Sourced from [freesound.org](https://freesound.org):
+
+| File | Original | Author |
+|------|----------|--------|
+| `fart1.mp3` | fartshort (#691977) | aetherzip |
+| `fart2.wav` | liquiddestinyfart (#456558) | fartmaster666 |
+| `fart3.wav` | fartsound50 (#663636) | frenkfurth |
+| `fart4.wav` | funnyfart (#833105) | crimsonblaze |
+| `fart5.wav` | fartsfake001 (#654573) | frenkfurth |
+
+
 Want **real** fart sounds instead of synthesized ones? Drop audio files in
 this folder named:
 
