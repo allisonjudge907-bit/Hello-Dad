@@ -386,93 +386,101 @@
             </h2>
             <p class="hand-instructions">Click or tap any finger on the hand below. Each one has its own signature sound.</p>
             <div class="hand-container">
-                <svg class="hand-svg" id="handSvg" width="440" height="380" viewBox="0 0 440 380">
+                <svg class="hand-svg" id="handSvg" width="440" height="440" viewBox="0 0 440 440">
                     <defs>
                         <linearGradient id="skinGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#ffd0a8"></stop>
-                            <stop offset="100%" stop-color="#e8a878"></stop>
-                        </linearGradient>
-                        <linearGradient id="skinGradShadow" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#f0bd94"></stop>
+                            <stop offset="0%" stop-color="#ffdcbb"></stop>
+                            <stop offset="55%" stop-color="#f0bd94"></stop>
                             <stop offset="100%" stop-color="#d99b6c"></stop>
+                        </linearGradient>
+                        <linearGradient id="palmGrad" x1="10%" y1="0%" x2="90%" y2="100%">
+                            <stop offset="0%" stop-color="#f7c9a0"></stop>
+                            <stop offset="100%" stop-color="#dda274"></stop>
+                        </linearGradient>
+                        <linearGradient id="wristGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#dda274"></stop>
+                            <stop offset="100%" stop-color="#c98a5c"></stop>
                         </linearGradient>
                     </defs>
 
-                    <!-- Palm -->
-                    <path d="M 130 190
-                             C 128 260, 140 320, 175 350
-                             C 210 372, 250 372, 280 352
-                             C 312 328, 322 265, 318 195
-                             L 318 175
-                             C 318 165, 130 165, 130 175
+                    <!-- ground shadow -->
+                    <ellipse cx="222" cy="420" rx="130" ry="14" fill="#000" opacity="0.15"/>
+
+                    <!-- wrist / forearm stub -->
+                    <path d="M 170,340 L 168,430 Q 168,440 178,440 L 268,440 Q 278,440 278,430 L 274,340 Z"
+                          fill="url(#wristGrad)" stroke="#b87d52" stroke-width="2.5"/>
+
+                    <!-- palm -->
+                    <path d="M 152,205
+                             Q 130,206 126,236
+                             L 123,272
+                             Q 106,288 103,314
+                             Q 100,346 130,364
+                             Q 168,384 224,384
+                             Q 280,384 312,364
+                             Q 338,347 333,315
+                             Q 330,288 326,266
+                             L 322,232
+                             Q 320,207 297,206
                              Z"
-                          fill="url(#skinGrad)" stroke="#c17e4f" stroke-width="2.5"/>
-                    <!-- palm crease details -->
-                    <path d="M 165 210 C 195 235, 245 235, 285 208" fill="none" stroke="#c17e4f" stroke-width="1.5" opacity="0.5"/>
-                    <path d="M 175 250 C 210 268, 250 268, 285 248" fill="none" stroke="#c17e4f" stroke-width="1.5" opacity="0.4"/>
+                          fill="url(#palmGrad)" stroke="#b87d52" stroke-width="2.5"/>
 
-                    <!-- Thumb -->
+                    <!-- palm creases -->
+                    <path d="M 148,248 Q 200,272 300,244" fill="none" stroke="#b87d52" stroke-width="2" opacity="0.45" stroke-linecap="round"/>
+                    <path d="M 140,292 Q 200,318 316,286" fill="none" stroke="#b87d52" stroke-width="2" opacity="0.35" stroke-linecap="round"/>
+                    <path d="M 165,340 Q 224,356 290,338" fill="none" stroke="#b87d52" stroke-width="2" opacity="0.3" stroke-linecap="round"/>
+
+                    <!-- thenar bulge shading (thumb-side muscle) -->
+                    <ellipse cx="140" cy="300" rx="30" ry="46" fill="#fff" opacity="0.08"/>
+
+                    <!-- THUMB -->
                     <g id="thumb" class="finger-group" tabindex="0" role="button" aria-label="Thumb">
-                        <path d="M 90 210
-                                 C 70 200, 58 178, 66 158
-                                 C 73 140, 96 136, 110 150
-                                 C 122 162, 132 182, 138 205
-                                 L 150 235
-                                 L 118 250
-                                 Z"
-                              fill="url(#skinGradShadow)" stroke="#c17e4f" stroke-width="2.5"/>
-                        <ellipse cx="88" cy="172" rx="15" ry="12" fill="#c17e4f" opacity="0.15"/>
+                        <g transform="rotate(-48 158 300)">
+                            <rect x="136" y="248" width="44" height="64" rx="22" fill="url(#skinGrad)" stroke="#b87d52" stroke-width="2.5"/>
+                            <rect x="140" y="196" width="36" height="66" rx="18" fill="url(#skinGrad)" stroke="#b87d52" stroke-width="2.5"/>
+                            <ellipse cx="158" cy="212" rx="12" ry="15" fill="#fff0e2" opacity="0.55" stroke="#c9975f" stroke-width="1"/>
+                            <line x1="140" y1="256" x2="180" y2="256" stroke="#b87d52" stroke-width="1.5" opacity="0.4"/>
+                        </g>
                     </g>
 
-                    <!-- Pinky (drawn before others so layering looks right at the sides) -->
+                    <!-- PINKY -->
                     <g id="pinky" class="finger-group" tabindex="0" role="button" aria-label="Pinky finger">
-                        <path d="M 320 210
-                                 C 340 200, 358 188, 366 168
-                                 C 372 152, 366 138, 352 136
-                                 C 340 134, 330 144, 326 160
-                                 C 320 180, 316 198, 316 215
-                                 Z"
-                              fill="url(#skinGrad)" stroke="#c17e4f" stroke-width="2.5"/>
-                        <line x1="330" y1="175" x2="352" y2="167" stroke="#c17e4f" stroke-width="1.5" opacity="0.5"/>
+                        <rect x="292" y="198" width="36" height="54" rx="18" fill="url(#skinGrad)" stroke="#b87d52" stroke-width="2.5"/>
+                        <rect x="295" y="158" width="30" height="52" rx="15" fill="url(#skinGrad)" stroke="#b87d52" stroke-width="2.5"/>
+                        <rect x="298" y="122" width="24" height="46" rx="12" fill="url(#skinGrad)" stroke="#b87d52" stroke-width="2.5"/>
+                        <ellipse cx="310" cy="132" rx="9" ry="11" fill="#fff0e2" opacity="0.55" stroke="#c9975f" stroke-width="1"/>
+                        <line x1="295" y1="206" x2="325" y2="206" stroke="#b87d52" stroke-width="1.5" opacity="0.35"/>
+                        <line x1="298" y1="164" x2="322" y2="164" stroke="#b87d52" stroke-width="1.5" opacity="0.35"/>
                     </g>
 
-                    <!-- Ring finger -->
+                    <!-- RING -->
                     <g id="ring" class="finger-group" tabindex="0" role="button" aria-label="Ring finger">
-                        <path d="M 262 185
-                                 C 262 140, 264 100, 270 72
-                                 C 273 58, 296 58, 300 72
-                                 C 306 100, 308 140, 306 185
-                                 Z"
-                              fill="url(#skinGrad)" stroke="#c17e4f" stroke-width="2.5"/>
-                        <line x1="266" y1="120" x2="303" y2="120" stroke="#c17e4f" stroke-width="1.5" opacity="0.5"/>
-                        <line x1="267" y1="150" x2="304" y2="150" stroke="#c17e4f" stroke-width="1.5" opacity="0.4"/>
-                        <rect x="273" y="60" width="24" height="16" rx="8" fill="#e8a878" stroke="#c17e4f" stroke-width="1.5"/>
+                        <rect x="248" y="168" width="42" height="58" rx="21" fill="url(#skinGrad)" stroke="#b87d52" stroke-width="2.5"/>
+                        <rect x="251" y="122" width="36" height="56" rx="18" fill="url(#skinGrad)" stroke="#b87d52" stroke-width="2.5"/>
+                        <rect x="254" y="82" width="30" height="50" rx="15" fill="url(#skinGrad)" stroke="#b87d52" stroke-width="2.5"/>
+                        <ellipse cx="269" cy="94" rx="11" ry="13" fill="#fff0e2" opacity="0.55" stroke="#c9975f" stroke-width="1"/>
+                        <line x1="251" y1="176" x2="287" y2="176" stroke="#b87d52" stroke-width="1.5" opacity="0.35"/>
+                        <line x1="254" y1="130" x2="284" y2="130" stroke="#b87d52" stroke-width="1.5" opacity="0.35"/>
                     </g>
 
-                    <!-- Index finger -->
+                    <!-- INDEX -->
                     <g id="index" class="finger-group" tabindex="0" role="button" aria-label="Index finger">
-                        <path d="M 168 185
-                                 C 166 138, 166 96, 172 66
-                                 C 175 50, 200 50, 204 66
-                                 C 210 96, 210 138, 208 185
-                                 Z"
-                              fill="url(#skinGrad)" stroke="#c17e4f" stroke-width="2.5"/>
-                        <line x1="170" y1="112" x2="207" y2="112" stroke="#c17e4f" stroke-width="1.5" opacity="0.5"/>
-                        <line x1="169" y1="145" x2="207" y2="145" stroke="#c17e4f" stroke-width="1.5" opacity="0.4"/>
-                        <rect x="175" y="54" width="24" height="16" rx="8" fill="#e8a878" stroke="#c17e4f" stroke-width="1.5"/>
+                        <rect x="154" y="166" width="42" height="58" rx="21" fill="url(#skinGrad)" stroke="#b87d52" stroke-width="2.5"/>
+                        <rect x="157" y="120" width="36" height="56" rx="18" fill="url(#skinGrad)" stroke="#b87d52" stroke-width="2.5"/>
+                        <rect x="160" y="80" width="30" height="50" rx="15" fill="url(#skinGrad)" stroke="#b87d52" stroke-width="2.5"/>
+                        <ellipse cx="175" cy="92" rx="11" ry="13" fill="#fff0e2" opacity="0.55" stroke="#c9975f" stroke-width="1"/>
+                        <line x1="157" y1="174" x2="193" y2="174" stroke="#b87d52" stroke-width="1.5" opacity="0.35"/>
+                        <line x1="160" y1="128" x2="190" y2="128" stroke="#b87d52" stroke-width="1.5" opacity="0.35"/>
                     </g>
 
-                    <!-- Middle finger -->
+                    <!-- MIDDLE -->
                     <g id="middle" class="finger-group" tabindex="0" role="button" aria-label="Middle finger">
-                        <path d="M 216 180
-                                 C 214 122, 214 68, 220 32
-                                 C 223 14, 250 14, 254 32
-                                 C 260 68, 260 122, 258 180
-                                 Z"
-                              fill="url(#skinGrad)" stroke="#c17e4f" stroke-width="2.5"/>
-                        <line x1="217" y1="90" x2="257" y2="90" stroke="#c17e4f" stroke-width="1.5" opacity="0.5"/>
-                        <line x1="216" y1="135" x2="258" y2="135" stroke="#c17e4f" stroke-width="1.5" opacity="0.4"/>
-                        <rect x="224" y="18" width="26" height="18" rx="9" fill="#e8a878" stroke="#c17e4f" stroke-width="1.5"/>
+                        <rect x="202" y="162" width="44" height="62" rx="22" fill="url(#skinGrad)" stroke="#b87d52" stroke-width="2.5"/>
+                        <rect x="206" y="106" width="36" height="62" rx="18" fill="url(#skinGrad)" stroke="#b87d52" stroke-width="2.5"/>
+                        <rect x="209" y="58" width="30" height="54" rx="15" fill="url(#skinGrad)" stroke="#b87d52" stroke-width="2.5"/>
+                        <ellipse cx="224" cy="70" rx="11" ry="13" fill="#fff0e2" opacity="0.55" stroke="#c9975f" stroke-width="1"/>
+                        <line x1="206" y1="170" x2="242" y2="170" stroke="#b87d52" stroke-width="1.5" opacity="0.35"/>
+                        <line x1="209" y1="114" x2="239" y2="114" stroke="#b87d52" stroke-width="1.5" opacity="0.35"/>
                     </g>
                 </svg>
             </div>
