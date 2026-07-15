@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Gift For You 🎁</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎁</text></svg>" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- STAGE 1: The Present -->
+  <section id="present-stage" class="stage active">
+    <h1 class="title">You've received a gift!</h1>
+    <p class="subtitle">Click the present to open it…</p>
+
+    <div id="present" class="present" role="button" aria-label="Open the present" tabindex="0">
+      <div class="lid">
+        <div class="bow">
+          <div class="bow-loop left"></div>
+          <div class="bow-loop right"></div>
+          <div class="bow-knot"></div>
+        </div>
+      </div>
+      <div class="box">
+        <div class="ribbon-v"></div>
+      </div>
+      <div class="sparkles">
+        <span>✨</span><span>✨</span><span>✨</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- STAGE 2: The Hand -->
+  <section id="hand-stage" class="stage">
+    <h1 class="title">Pull my finger.</h1>
+    <p class="subtitle">Go on… you know you want to. Click a finger.</p>
+
+    <div class="hand-wrap">
+      <svg id="hand" viewBox="0 0 420 520" xmlns="http://www.w3.org/2000/svg" aria-label="A hand. Click a finger.">
+        <defs>
+          <radialGradient id="skin" cx="45%" cy="35%" r="80%">
+            <stop offset="0%" stop-color="#f2c7a5"/>
+            <stop offset="55%" stop-color="#e8b48d"/>
+            <stop offset="100%" stop-color="#d29a72"/>
+          </radialGradient>
+          <linearGradient id="skinFinger" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#e9b891"/>
+            <stop offset="45%" stop-color="#f2c7a5"/>
+            <stop offset="100%" stop-color="#d6a077"/>
+          </linearGradient>
+          <linearGradient id="nail" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#fbe9dd"/>
+            <stop offset="100%" stop-color="#eecdb8"/>
+          </linearGradient>
+          <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="1.2"/>
+          </filter>
+        </defs>
+
+        <!-- Wrist / forearm -->
+        <path d="M150 520 L150 430 Q150 415 165 412 L255 412 Q270 415 270 430 L270 520 Z"
+              fill="url(#skin)" stroke="#c08c63" stroke-width="2"/>
+
+        <!-- Palm -->
+        <path d="M120 300
+                 Q115 250 130 225
+                 L150 205
+                 Q205 185 270 205
+                 L292 228
+                 Q305 255 298 305
+                 Q296 360 275 400
+                 Q245 425 210 425
+                 Q170 425 145 400
+                 Q122 355 120 300 Z"
+              fill="url(#skin)" stroke="#c08c63" stroke-width="2.5"/>
+
+        <!-- Palm creases -->
+        <g stroke="#c68f66" stroke-width="2" fill="none" opacity="0.55" filter="url(#soft)">
+          <path d="M150 300 Q200 275 265 292"/>
+          <path d="M148 330 Q205 310 278 330"/>
+          <path d="M170 360 Q195 385 210 408"/>
+        </g>
+
+        <!-- Thumb -->
+        <g class="finger" data-finger="thumb" tabindex="0" role="button" aria-label="Pull the thumb">
+          <path d="M120 300
+                   Q90 285 72 250
+                   Q58 220 66 200
+                   Q74 182 92 188
+                   Q112 196 126 226
+                   Q138 252 142 280
+                   Q133 293 120 300 Z"
+                fill="url(#skinFinger)" stroke="#c08c63" stroke-width="2.5"/>
+          <ellipse cx="76" cy="203" rx="10" ry="14" fill="url(#nail)" stroke="#d8a985" stroke-width="1.5" transform="rotate(24 76 203)"/>
+          <path d="M100 240 q10 6 14 16" stroke="#c68f66" stroke-width="1.8" fill="none" opacity="0.5"/>
+        </g>
+
+        <!-- Index finger -->
+        <g class="finger" data-finger="index" tabindex="0" role="button" aria-label="Pull the index finger">
+          <path d="M138 212
+                   Q132 150 134 100
+                   Q135 72 152 72
+                   Q169 72 171 100
+                   Q174 150 172 210
+                   Q155 202 138 212 Z"
+                fill="url(#skinFinger)" stroke="#c08c63" stroke-width="2.5"/>
+          <ellipse cx="152" cy="88" rx="11" ry="13" fill="url(#nail)" stroke="#d8a985" stroke-width="1.5"/>
+          <path d="M138 140 q15 -5 32 0 M137 175 q16 -5 34 0" stroke="#c68f66" stroke-width="1.8" fill="none" opacity="0.5"/>
+        </g>
+
+        <!-- Middle finger -->
+        <g class="finger" data-finger="middle" tabindex="0" role="button" aria-label="Pull the middle finger">
+          <path d="M178 208
+                   Q173 130 176 68
+                   Q177 40 195 40
+                   Q213 40 214 68
+                   Q217 130 212 208
+                   Q195 200 178 208 Z"
+                fill="url(#skinFinger)" stroke="#c08c63" stroke-width="2.5"/>
+          <ellipse cx="195" cy="57" rx="11" ry="13" fill="url(#nail)" stroke="#d8a985" stroke-width="1.5"/>
+          <path d="M178 115 q17 -5 35 0 M177 160 q18 -5 36 0" stroke="#c68f66" stroke-width="1.8" fill="none" opacity="0.5"/>
+        </g>
+
+        <!-- Ring finger -->
+        <g class="finger" data-finger="ring" tabindex="0" role="button" aria-label="Pull the ring finger">
+          <path d="M219 208
+                   Q216 140 219 82
+                   Q220 55 237 55
+                   Q254 55 255 82
+                   Q258 140 253 210
+                   Q236 202 219 208 Z"
+                fill="url(#skinFinger)" stroke="#c08c63" stroke-width="2.5"/>
+          <ellipse cx="237" cy="71" rx="10.5" ry="13" fill="url(#nail)" stroke="#d8a985" stroke-width="1.5"/>
+          <path d="M220 125 q16 -5 33 0 M219 165 q17 -5 35 0" stroke="#c68f66" stroke-width="1.8" fill="none" opacity="0.5"/>
+        </g>
+
+        <!-- Pinky -->
+        <g class="finger" data-finger="pinky" tabindex="0" role="button" aria-label="Pull the pinky">
+          <path d="M260 215
+                   Q259 165 262 125
+                   Q263 100 278 100
+                   Q293 100 294 125
+                   Q296 165 292 220
+                   Q276 210 260 215 Z"
+                fill="url(#skinFinger)" stroke="#c08c63" stroke-width="2.5"/>
+          <ellipse cx="278" cy="115" rx="9.5" ry="12" fill="url(#nail)" stroke="#d8a985" stroke-width="1.5"/>
+          <path d="M262 155 q14 -4 29 0 M261 185 q15 -4 31 0" stroke="#c68f66" stroke-width="1.8" fill="none" opacity="0.5"/>
+        </g>
+
+        <!-- Knuckle dimples -->
+        <g fill="#c68f66" opacity="0.35">
+          <ellipse cx="155" cy="215" rx="8" ry="4"/>
+          <ellipse cx="195" cy="210" rx="8" ry="4"/>
+          <ellipse cx="236" cy="212" rx="8" ry="4"/>
+          <ellipse cx="276" cy="220" rx="7" ry="4"/>
+        </g>
+      </svg>
+      <div id="stink-lines" class="stink-lines" aria-hidden="true">
+        <span>〰️</span><span>〰️</span><span>〰️</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- STAGE 3: Congratulations -->
+  <section id="congrats-stage" class="stage">
+    <div class="banner">
+      <h1 class="congrats-title">🎉 CONGRATULATIONS! 🎉</h1>
+      <p class="congrats-text" id="congrats-text">You pulled the finger. You brave, brave soul.</p>
+      <button id="restart-btn" class="restart-btn">🔄 Pull it again</button>
+    </div>
+  </section>
+
+  <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+  <script src="script.js"></script>
+</body>
+</html>

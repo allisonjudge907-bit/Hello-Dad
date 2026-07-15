@@ -1,0 +1,302 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg1: #667eea;
+  --bg2: #764ba2;
+  --gold: #ffd700;
+}
+
+body {
+  font-family: "Comic Sans MS", "Chalkboard SE", "Segoe UI", sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--bg1), var(--bg2));
+  overflow: hidden;
+  color: #fff;
+}
+
+.stage {
+  display: none;
+  position: fixed;
+  inset: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  text-align: center;
+  padding: 1rem;
+}
+
+.stage.active {
+  display: flex;
+}
+
+.title {
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  text-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
+}
+
+.subtitle {
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  opacity: 0.9;
+}
+
+/* ---------- Present ---------- */
+.present {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  margin-top: 2.5rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+  animation: bounce 1.6s ease-in-out infinite;
+}
+
+.present:hover {
+  transform: scale(1.07);
+  animation-play-state: paused;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+
+.present .box {
+  position: absolute;
+  bottom: 0;
+  width: 220px;
+  height: 150px;
+  background: linear-gradient(160deg, #e74c3c, #c0392b);
+  border-radius: 8px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.present .ribbon-v {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 34px;
+  height: 100%;
+  background: linear-gradient(90deg, #f8d648, var(--gold), #f8d648);
+}
+
+.present .lid {
+  position: absolute;
+  top: 34px;
+  left: -10px;
+  width: 240px;
+  height: 46px;
+  background: linear-gradient(160deg, #ff6656, #e74c3c);
+  border-radius: 8px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+  transform-origin: left bottom;
+  transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 2;
+}
+
+.present.opening .lid {
+  transform: rotate(-105deg) translateY(-30px);
+}
+
+.present.opening {
+  animation: none;
+}
+
+.bow {
+  position: absolute;
+  top: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.bow-loop {
+  position: absolute;
+  top: 0;
+  width: 34px;
+  height: 26px;
+  border: 7px solid var(--gold);
+  border-radius: 50% 50% 0 50%;
+}
+
+.bow-loop.left {
+  left: -36px;
+  transform: rotate(-30deg);
+}
+
+.bow-loop.right {
+  left: 4px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(30deg);
+}
+
+.bow-knot {
+  position: absolute;
+  top: 8px;
+  left: -11px;
+  width: 22px;
+  height: 20px;
+  background: var(--gold);
+  border-radius: 50%;
+}
+
+.sparkles span {
+  position: absolute;
+  font-size: 1.5rem;
+  animation: twinkle 1.2s ease-in-out infinite;
+}
+
+.sparkles span:nth-child(1) { top: -30px; left: -20px; }
+.sparkles span:nth-child(2) { top: 10px; right: -34px; animation-delay: 0.4s; }
+.sparkles span:nth-child(3) { bottom: -10px; left: -34px; animation-delay: 0.8s; }
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(0.7); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+/* ---------- Hand ---------- */
+.hand-wrap {
+  position: relative;
+  margin-top: 0.5rem;
+}
+
+#hand {
+  width: min(70vw, 340px);
+  height: auto;
+  filter: drop-shadow(0 14px 24px rgba(0, 0, 0, 0.35));
+  animation: hand-enter 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes hand-enter {
+  from { transform: translateY(120px) scale(0.6); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.finger {
+  cursor: pointer;
+  transition: transform 0.15s ease;
+  transform-box: fill-box;
+  transform-origin: center bottom;
+}
+
+.finger:hover,
+.finger:focus-visible {
+  transform: translateY(-8px);
+  outline: none;
+}
+
+.finger.pulled {
+  animation: pull 0.5s ease;
+}
+
+@keyframes pull {
+  0% { transform: translateY(0); }
+  35% { transform: translateY(22px) scaleY(0.92); }
+  60% { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+}
+
+.hand-wrap.shaking #hand {
+  animation: shake 0.45s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  20% { transform: translateX(-7px) rotate(-2deg); }
+  40% { transform: translateX(7px) rotate(2deg); }
+  60% { transform: translateX(-5px) rotate(-1.5deg); }
+  80% { transform: translateX(5px) rotate(1.5deg); }
+}
+
+.stink-lines {
+  position: absolute;
+  bottom: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+  gap: 10px;
+  font-size: 2rem;
+  pointer-events: none;
+}
+
+.stink-lines.visible {
+  display: flex;
+}
+
+.stink-lines span {
+  animation: rise 1.4s ease-out forwards;
+  opacity: 0;
+}
+
+.stink-lines span:nth-child(2) { animation-delay: 0.15s; }
+.stink-lines span:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes rise {
+  0% { opacity: 0; transform: translateY(0) rotate(0deg); }
+  25% { opacity: 0.9; }
+  100% { opacity: 0; transform: translateY(-110px) rotate(20deg); }
+}
+
+/* ---------- Congrats ---------- */
+.banner {
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-radius: 24px;
+  padding: clamp(1.5rem, 5vw, 3rem) clamp(2rem, 7vw, 4.5rem);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  animation: banner-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes banner-pop {
+  from { transform: scale(0.3) rotate(-6deg); opacity: 0; }
+  to { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+.congrats-title {
+  font-size: clamp(1.6rem, 5vw, 3rem);
+  text-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
+  margin-bottom: 0.8rem;
+}
+
+.congrats-text {
+  font-size: clamp(1rem, 2.6vw, 1.35rem);
+  margin-bottom: 1.8rem;
+  opacity: 0.95;
+}
+
+.restart-btn {
+  font-family: inherit;
+  font-size: clamp(1rem, 2.6vw, 1.3rem);
+  font-weight: bold;
+  color: #5b3a8c;
+  background: linear-gradient(180deg, #ffe985, var(--gold));
+  border: none;
+  border-radius: 999px;
+  padding: 0.85em 2em;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.restart-btn:hover {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.35);
+}
+
+.restart-btn:active {
+  transform: translateY(1px);
+}
+
+#confetti-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 10;
+}
